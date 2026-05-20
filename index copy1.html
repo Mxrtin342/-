@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sharp Heart Animation</title>
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    body{
+      background:black;
+      overflow:hidden;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      height:100vh;
+      font-family:Arial, sans-serif;
+    }
+
+    #heart{
+      position:relative;
+      width:700px;
+      height:700px;
+    }
+
+    .text{
+      position:absolute;
+
+      color:#ffd1e6;
+
+      font-size:24px;
+      font-weight:700;
+
+      white-space:nowrap;
+
+      /* ทำตัวหนังสือคม */
+      -webkit-font-smoothing: antialiased;
+      text-rendering: geometricPrecision;
+
+      /* ลด blur */
+      text-shadow:
+      0 0 2px #ff69b4,
+      0 0 6px #ff69b4,
+      0 0 12px #ff69b4;
+
+      transition:0.05s linear;
+    }
+
+  </style>
+
+</head>
+<body>
+
+<div id="heart"></div>
+
+<script>
+
+const heart = document.getElementById("heart");
+
+const total = 100;
+const texts = [];
+
+for(let i = 0; i < total; i++){
+
+  const div = document.createElement("div");
+
+  div.className = "text";
+
+  div.innerText = "I love you";
+
+  heart.appendChild(div);
+
+  texts.push(div);
+}
+
+
+function animate(){
+
+  // slow motion
+  const time = Date.now() * 0.0005;
+
+  texts.forEach((txt, i) => {
+
+    const t = (i / total) * Math.PI * 2 + time;
+
+    // สมการหัวใจ
+    const x = 16 * Math.pow(Math.sin(t), 3);
+
+    const y =
+      13 * Math.cos(t)
+      - 5 * Math.cos(2 * t)
+      - 2 * Math.cos(3 * t)
+      - Math.cos(4 * t);
+
+    txt.style.left = (x * 20 + 300) + "px";
+
+    txt.style.top = (-y * 20 + 300) + "px";
+
+  });
+
+  requestAnimationFrame(animate);
+}
+
+animate();
+
+</script>
+
+</body>
+</html>
